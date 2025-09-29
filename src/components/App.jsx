@@ -1,6 +1,10 @@
 import React from "react"
 export default function App(){
     return(
-    <h1>Hello from app component</h1>
+    <>
+     <div className="container">
+
+     </div>
+    </>
     )
 }
