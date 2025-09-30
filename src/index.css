@@ -24,8 +24,8 @@ body{
     
     height: 100%;
     width: 100%;
-    max-width: 450px;
-    max-height: 450px;
+    max-width: 500px;
+    max-height: 500px;
 }
 
 .container{
@@ -38,7 +38,21 @@ body{
     align-items: center;
     justify-content: space-evenly;
     border: 2px solid turquoise
+
     
+}
+
+.title{
+    font-size: 40px;
+    margin: 0px;
+}
+
+.instructions{
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+    margin-top: 0;
+    text-align: center;
+
 }
 
 
@@ -61,8 +75,8 @@ body{
 
     display: grid;
     grid-template-columns: repeat(5, 1fr); 
-    gap: 20px; 
-    
+    gap: 30px; 
+    margin-bottom: 15px;
 
 }
 

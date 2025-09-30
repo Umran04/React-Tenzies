@@ -49,6 +49,9 @@ export default function App(){
     <>
      <div className="container">
 
+        <h1 className="title">Tenzies</h1>
+        <p className="instructions">Roll until all the dice are the same. Click each dice to freeze it at its current value between rolls</p>
+
         <div className="die-grid">
             {roll}
         </div>
