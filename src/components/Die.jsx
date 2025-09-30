@@ -1,25 +1,11 @@
 export default function Die(props){
-    
-
-    
-    function generateNewDice(){
-        let diceArray = [ ]
-        for (let i = 0; i < 10; i++){
-            diceArray.push(Math.floor(Math.random() * 6) + 1)
-        }
-        
-      return diceArray
-    }
-
-    console.log(generateNewDice())
-
-    
-
-   
     return(
         <>
         
-            <button onClick={generateNewDice} className="die">{props.value}</button>
+            <button 
+            style={ {backgroundColor: props.isHeld ? '#59E391' : 'white'}}
+            onClick={props.hold}
+             className="die">{props.value}</button>
         
         </>
     )

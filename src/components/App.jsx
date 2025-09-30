@@ -1,5 +1,6 @@
 import React from "react"
 import { useState, useEffect } from 'react'
+import { nanoid } from "nanoid"
 import Die from "./Die"
 
 export default function App(){
@@ -7,7 +8,13 @@ export default function App(){
     function generateNewDice(){
         let diceArray = [ ]
         for (let i = 0; i < 10; i++){
-            diceArray.push(Math.floor(Math.random() * 6) + 1)
+            diceArray.push( 
+                { 
+                    value : Math.floor(Math.random() * 6) + 1,
+                     isHeld: false,
+                      id:nanoid()
+                }
+            )
         }
         
       return diceArray
@@ -15,11 +22,26 @@ export default function App(){
 
     const [diceRoll,setDiceRoll] = useState(generateNewDice())
 
-    let roll = diceRoll.map(num => <Die value={num}/>)
 
     function reRoll(){
         setDiceRoll(generateNewDice())
     }
+
+    function hold(id){
+        console.log(id)
+        setDiceRoll(prevDice => prevDice.map(die => {
+            return die.id === id? {...die, isHeld : !die.isHeld} : die
+        }))
+    }
+
+    let roll = diceRoll.map(diceObj =>
+        <Die 
+        key={diceObj.id}
+        id={diceObj.id} 
+        value={diceObj.value} 
+        isHeld={diceObj.isHeld}
+        hold={ () => hold(diceObj.id) } />)
+
 
     return(
     <>
