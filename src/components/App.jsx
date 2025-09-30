@@ -1,5 +1,5 @@
 import React from "react"
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Die from "./Die"
 
 export default function App(){
@@ -17,6 +17,10 @@ export default function App(){
 
     let roll = diceRoll.map(num => <Die value={num}/>)
 
+    function reRoll(){
+        setDiceRoll(generateNewDice())
+    }
+
     return(
     <>
      <div className="container">
@@ -24,6 +28,8 @@ export default function App(){
         <div className="die-grid">
             {roll}
         </div>
+
+        <button onClick={reRoll} className="roll-btn">Roll</button>
 
 
      </div>
