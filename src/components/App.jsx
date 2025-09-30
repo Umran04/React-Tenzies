@@ -22,13 +22,17 @@ export default function App(){
       return diceArray
     }
 
-    const [dice,setDice] = useState(generateNewDice())
+    const [dice,setDice] = useState( () => generateNewDice() )
 
 
-    function reRoll(){
+    function diceRoll(){
         setDice(prevDice => prevDice.map(die => {
             return die.isHeld === false ? {...die, value: Math.floor(Math.random() * 6) + 1} : die
         }))
+
+        if(gameWon){
+            setDice(generateNewDice())
+        }
     }
 
     function hold(id){
@@ -64,7 +68,7 @@ export default function App(){
             {roll}
         </div>
 
-        <button onClick={reRoll} className="roll-btn">{gameWon ? 'New Game' : 'Roll'}</button>
+        <button onClick={diceRoll} className="roll-btn">{gameWon ? 'New Game' : 'Roll'}</button>
 
 
      </div>
