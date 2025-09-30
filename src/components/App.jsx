@@ -24,11 +24,13 @@ export default function App(){
 
 
     function reRoll(){
-        setDiceRoll(generateNewDice())
+        setDiceRoll(prevDice => prevDice.map(die => {
+            return die.isHeld === false ? {...die, value: Math.floor(Math.random() * 6) + 1} : die
+        }))
     }
 
     function hold(id){
-        console.log(id)
+        
         setDiceRoll(prevDice => prevDice.map(die => {
             return die.id === id? {...die, isHeld : !die.isHeld} : die
         }))
