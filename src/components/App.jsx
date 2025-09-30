@@ -1,22 +1,28 @@
 import React from "react"
+import { useState } from 'react'
 import Die from "./Die"
 
 export default function App(){
+
+    function generateNewDice(){
+        let diceArray = [ ]
+        for (let i = 0; i < 10; i++){
+            diceArray.push(Math.floor(Math.random() * 6) + 1)
+        }
+        
+      return diceArray
+    }
+
+    const [diceRoll,setDiceRoll] = useState(generateNewDice())
+
+    let roll = diceRoll.map(num => <Die value={num}/>)
+
     return(
     <>
      <div className="container">
 
         <div className="die-grid">
-            <Die value={1}/>
-            <Die value={2}/>
-            <Die value={3}/>
-            <Die value={4}/>
-            <Die value={5}/>
-            <Die value={6}/>
-            <Die value={1}/>
-            <Die value={2}/>
-            <Die value={3}/>
-            <Die value={4}/>
+            {roll}
         </div>
 
 
