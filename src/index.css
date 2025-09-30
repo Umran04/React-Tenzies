@@ -85,11 +85,12 @@ body{
     color: white;
     border: none;
     border-radius: 5px;
-    width: 120px;
+    width: 145px;
     height: 50px;
-    /* margin-top: 75px; */
     font-size: 1.5rem;
     font-weight: bold;
+    
+
     
 }
 

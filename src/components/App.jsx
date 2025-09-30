@@ -4,6 +4,7 @@ import { nanoid } from "nanoid"
 import Die from "./Die"
 
 export default function App(){
+    let gameWon = false
 
     function generateNewDice(){
         let diceArray = [ ]
@@ -37,6 +38,7 @@ export default function App(){
     }
 
     if(dice.every(die => die.isHeld) && dice.every(die => die.value === dice[0].value)){
+        gameWon = true
         console.log('Game Won')
     }
     
@@ -61,7 +63,7 @@ export default function App(){
             {roll}
         </div>
 
-        <button onClick={reRoll} className="roll-btn">Roll</button>
+        <button onClick={reRoll} className="roll-btn">{gameWon ? 'New Game' : 'Roll'}</button>
 
 
      </div>
