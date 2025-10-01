@@ -1,16 +1,18 @@
 import React from "react"
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef} from 'react'
 import { nanoid } from "nanoid"
 import Confetti from 'react-confetti'
 import Die from "./Die"
 
 export default function App(){
+    const [dice,setDice] = useState( () => generateNewDice() )
     const [timer,setTimer] = useState(0)
     const [timerRunning,setTimerRunning] = useState(false) //creating states for the timer and to see when to start and stop the timer
     const minutes = Math.floor(timer / 60)
     const seconds = timer % 60
     const formattedTimer = `${minutes}${minutes}:${seconds < 10 ? '0': ''}${seconds}`
     let [gameWon,setGameWon] = useState(false)// put gameWon in a state to again be able to start and stop the timer
+    let focusRef = useRef(null)
 
     useEffect( () => {
 
@@ -25,6 +27,10 @@ export default function App(){
         }
         
     }, [timerRunning]) //creating the timer
+
+
+    /*---------------------------------------------------------------------------*/ 
+
 
 
     function generateNewDice(){
@@ -42,8 +48,8 @@ export default function App(){
       return diceArray
     }
 
-    const [dice,setDice] = useState( () => generateNewDice() )
-
+    
+    /*---------------------------------------------------------------------------*/ 
 
     function diceRoll(){
         setDice(prevDice => prevDice.map(die => {
@@ -57,6 +63,8 @@ export default function App(){
         }
     }
 
+    /*---------------------------------------------------------------------------*/ 
+
     function hold(id){
 
         if(gameWon === false && timerRunning === false){
@@ -69,6 +77,8 @@ export default function App(){
         }))
     }
 
+    /*---------------------------------------------------------------------------*/ 
+
     useEffect(()=>{
         if(gameWon === false && (dice.every(die => die.isHeld) && dice.every(die => die.value === dice[0].value))){
             setGameWon(true)
@@ -77,7 +87,14 @@ export default function App(){
         }
     },[dice])
 
-    
+    /*---------------------------------------------------------------------------*/ 
+
+
+    useEffect(()=>{
+        if(gameWon === true){
+            focusRef.current.focus()
+        }
+    }, [gameWon])
     
 
     let roll = dice.map(diceObj =>
@@ -86,7 +103,10 @@ export default function App(){
         id={diceObj.id} 
         value={diceObj.value} 
         isHeld={diceObj.isHeld}
+        ref={focusRef}
         hold={ () => hold(diceObj.id) } />)
+
+    /*---------------------------------------------------------------------------*/ 
 
 
     return(
