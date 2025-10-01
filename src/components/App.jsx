@@ -6,8 +6,8 @@ import Die from "./Die"
 
 export default function App(){
     const [timer,setTimer] = useState(0)
-    const [timerRunning,setTimerRunning] = useState(false)
-    let [gameWon,setGameWon] = useState(false)
+    const [timerRunning,setTimerRunning] = useState(false) //creating states for the timer and to see when to start and stop the timer
+    let [gameWon,setGameWon] = useState(false)// put gameWon in a state to again be able to start and stop the timer
 
     useEffect( () => {
 
@@ -21,13 +21,8 @@ export default function App(){
             }
         }
         
-    }, [timerRunning])
+    }, [timerRunning]) //creating the timer
 
-
-    
-
-
-    
 
     function generateNewDice(){
         let diceArray = [ ]
@@ -52,15 +47,10 @@ export default function App(){
             return die.isHeld === false ? {...die, value: Math.floor(Math.random() * 6) + 1} : die
         }))
 
-        // if (timerRunning === false){
-        //     setTimer(0)
-        //     setTimerRunning(true)
-        // }
-
         if(gameWon){
             setDice(generateNewDice())
             setGameWon(false)
-            setTimer(0)
+            setTimer(0) // checks to see if gameWon is now true, if so change the state back to false and set the timer back to 0 when user hits new game button
         }
     }
 
@@ -68,7 +58,7 @@ export default function App(){
 
         if(gameWon === false && timerRunning === false){
             setTimer(0)
-            setTimerRunning(true)
+            setTimerRunning(true) // start the timer once the first dice has been clicked
         }
             
          setDice(prevDice => prevDice.map(die => {
@@ -79,12 +69,8 @@ export default function App(){
     useEffect(()=>{
         if(gameWon === false && (dice.every(die => die.isHeld) && dice.every(die => die.value === dice[0].value))){
             setGameWon(true)
-            setTimerRunning(false)
-            
-    
-    
-    
-            console.log('Game Won')
+            setTimerRunning(false)   //useEffect checks to see if the 2 winning conditions have been met, 
+                                     // if so then change the state of gameWon to true and set the timer to false  
         }
     },[dice])
 
