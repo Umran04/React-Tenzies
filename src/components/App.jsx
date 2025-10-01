@@ -5,7 +5,29 @@ import Confetti from 'react-confetti'
 import Die from "./Die"
 
 export default function App(){
-    let gameWon = false
+    const [timer,setTimer] = useState(0)
+    const [timerRunning,setTimerRunning] = useState(false)
+    let [gameWon,setGameWon] = useState(false)
+
+    useEffect( () => {
+
+        if(timerRunning === true){
+            const intervalId = setInterval( () => {
+                setTimer(prev => prev + 1)
+            }, 1000)
+
+            return()=>{
+                clearInterval(intervalId)
+            }
+        }
+        
+    }, [timerRunning])
+
+
+    
+
+
+    
 
     function generateNewDice(){
         let diceArray = [ ]
@@ -30,22 +52,43 @@ export default function App(){
             return die.isHeld === false ? {...die, value: Math.floor(Math.random() * 6) + 1} : die
         }))
 
+        // if (timerRunning === false){
+        //     setTimer(0)
+        //     setTimerRunning(true)
+        // }
+
         if(gameWon){
             setDice(generateNewDice())
+            setGameWon(false)
+            setTimer(0)
         }
     }
 
     function hold(id){
-        
-        setDice(prevDice => prevDice.map(die => {
+
+        if(gameWon === false && timerRunning === false){
+            setTimer(0)
+            setTimerRunning(true)
+        }
+            
+         setDice(prevDice => prevDice.map(die => {
             return die.id === id? {...die, isHeld : !die.isHeld} : die
         }))
     }
 
-    if(dice.every(die => die.isHeld) && dice.every(die => die.value === dice[0].value)){
-        gameWon = true
-        console.log('Game Won')
-    }
+    useEffect(()=>{
+        if(gameWon === false && (dice.every(die => die.isHeld) && dice.every(die => die.value === dice[0].value))){
+            setGameWon(true)
+            setTimerRunning(false)
+            
+    
+    
+    
+            console.log('Game Won')
+        }
+    },[dice])
+
+    
     
 
     let roll = dice.map(diceObj =>
@@ -59,6 +102,7 @@ export default function App(){
 
     return(
     <>
+    <div>{timer}</div>
      <div className="container">
         {gameWon && <Confetti />}
         <h1 className="title">Tenzies</h1>
