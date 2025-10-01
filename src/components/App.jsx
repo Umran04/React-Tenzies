@@ -7,6 +7,9 @@ import Die from "./Die"
 export default function App(){
     const [timer,setTimer] = useState(0)
     const [timerRunning,setTimerRunning] = useState(false) //creating states for the timer and to see when to start and stop the timer
+    const minutes = Math.floor(timer / 60)
+    const seconds = timer % 60
+    const formattedTimer = `${minutes}${minutes}:${seconds < 10 ? '0': ''}${seconds}`
     let [gameWon,setGameWon] = useState(false)// put gameWon in a state to again be able to start and stop the timer
 
     useEffect( () => {
@@ -88,7 +91,7 @@ export default function App(){
 
     return(
     <>
-    <div>{timer}</div>
+    <div className="timer">{formattedTimer}</div>
      <div className="container">
         {gameWon && <Confetti />}
         <h1 className="title">Tenzies</h1>
